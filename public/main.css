@@ -1,0 +1,150 @@
+body {
+  background-color:rgb(0, 0, 0);
+  overflow-x: hidden;
+}
+#home{
+  background-image: url(./bgimg.png);
+  min-height: 100vh;
+  background-size: cover;
+  background-position: top;
+  background-repeat: no-repeat;
+}
+span{
+  color: rgb(276, 163, 6);
+}
+.content{
+  height: 80vh;
+  display: grid;
+  place-content: center;
+}
+.container{
+  max-width: 900px;
+ 
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+}
+ h1 {
+    font-family: "Lucida Console", "Courier New", monospace;
+   color: rgb(276, 163, 6);
+   background-color: #6d530489;
+   border-radius: 15px;
+}
+.container h1{
+  font-size: 40px;
+}
+h2 {
+
+    font-family: "Lucida Console", "Courier New", monospace;
+    font-size: 20px;
+    /* color: rgb(0, 37, 245); */
+    color: white;
+}
+
+p,li {
+    font-family: "Lucida Console", "Courier New", monospace;
+    color: rgb(266, 163, 16);
+    line-height: 1.2;
+    	/*fade in out*/
+	-webkit-animation: fadeinout 1s;
+	animation: fadeinout 1s;
+  background-color: #6d530489;
+  border-radius: 25px;
+}
+
+@keyframes fadeinout {
+	from {
+		opacity: 0;
+	}
+	to {
+		opacity: 1;
+	}
+   
+}
+.container p, li{
+  text-indent: 40px;
+  font-size: 20px;
+}
+
+.container p{
+  padding-bottom: 50px;
+}
+a:link {
+    color: rgb(0, 0, 0);
+    text-decoration: none;
+    padding:5px 10px;
+  }
+  
+  /* visited link */
+  a:visited {
+    color: rgb(276, 163, 6);
+    text-decoration: none;
+    padding:5px 10px;
+  }
+  
+  /* mouse over link */
+  a:hover {
+    color: rgb(276, 163, 6);
+    background-color:rgb(216, 155, 24);
+    text-decoration: none;
+    padding:5px 10px;
+    border-radius: 3px;
+  }
+  
+  /* selected link */
+  a:active {
+    color: blue;
+    text-decoration: none;
+    padding:5px 10px;
+  }
+
+  #joinnow{
+    color: black;
+    background-color: rgb(216, 155, 24);
+    padding: 10px 40px;
+    font-weight: 600;
+    border-radius: 5px;
+  }
+
+  #joinnow:hover{
+    color: rgb(216, 155, 24);
+    background-color: black;
+  }
+
+  /* ---------------------ABOUT------------------- */
+  #about{
+    margin: 50px;  
+  }
+ 
+  #about h1{
+    text-align: center;
+    margin-bottom: 50px;
+  }
+
+  /******************FOOTER**************************/
+	.sticky-footer {
+		position: sticky;
+		top: 100%;
+		position: absolute;
+		background: linear-gradient(to left, rgb(131, 94, 13), #ecb623);
+		width: 100%;
+		color: rgb(0, 0, 0);
+		text-align: center;
+		padding-top: 2em;
+		line-height: 2em;
+    align-content: center;
+	}
+	.socials-footer li {
+		display: inline-block;
+	}
+	.socials-footer a {
+		color: rgb(255, 192, 5);
+		padding-right: 1em;
+		padding: 0.5em;
+		background: rgb(157, 106, 3);
+		border-radius: 1em;
+	}
+	.socials-footer a:hover {
+		opacity: 0.7;
+	}

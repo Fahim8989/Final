@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dashboard</title>
+    <link
+      rel="shortcut icon"
+      href="/assets/images/favicon.ico"
+      type="image/x-icon"
+    />
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <div class="dashboard-wrapper">
+      <nav>
+        <a href="/" class="logo">
+          <img src="/assets/images/logo.png" alt="logo" height="34px">
+          <h1 class="logo-text">Trading Pricer</h1>
+        </a>
+        <div class="links">
+          <a href="/">Home</a>
+          <a href="/about">About</a>
+        </div>
+        <div class="buttons" >
+          <a class="btn" href="/auth/login">SIGN IN</a>
+          <a class="btn" href="/auth/signup">SIGN UP</a>
+        </div>
+      </nav>
+      <section class="card-wrapper">
+        <div class="card">
+          <h3>Coin Prices List</h3>
+          <p>Learn about the latest rates of crypto currencies!</p>
+          <div class="cta-wrapper">
+            <a href="/user/cryptorates"> <button class="btn primary">Learn more</button></a>
+          </div>
+          <div class="image-wrapper">
+            <img
+              src="/assets/images/coinprices.jpg"
+              alt=""
+              height="280px"
+            />
+          </div>
+        </div>
+        <div class="card" style="background-color: #fbfbfd">
+          <h3>Search Coins</h3>
+          <p>Find the rate of trending coins in one click.</p>
+          <div class="cta-wrapper">
+            <a href="/search"> <button class="btn primary">Learn more</button> </a>
+          </div>
+          <div class="image-wrapper">
+            <img
+            src="/assets/images/searchcoin.jpg"
+            alt=""
+            height="280px"
+          />
+          </div>
+        </div>
+        <div class="card" style="background-color: #fbfbfd">
+          <h3>Favorites Coins</h3>
+          <p>Sneak peak at your favorite coins!.</p>
+          <div class="cta-wrapper">
+            <a href="/favorites">   <button class="btn primary">Learn more</button> </a>
+          </div>
+          <div class="image-wrapper">
+            <img
+            src="/assets/images/favorite.jpg"
+            alt=""
+            height="280px"
+          />
+          </div>
+        </div>
+
+        <div class="card" style="background-color: #fbfbfd">
+          <h3>Add a Custom Coin</h3>
+          <p>Add a custom coin to your list with ease.</p>
+          <div class="cta-wrapper">
+            <a href="/addcustomcoin">  <button class="btn primary">Learn more</button> </a>
+          </div>
+          <div class="image-wrapper">
+            <img
+            src="/assets/images/addcoin.jpg"
+            alt=""
+            height="280px"
+          />
+          </div>
+        </div>
+        <div class="card" style="background-color: #fbfbfd">
+          <h3>Check Weekly Prices</h3>
+          <p>Have a look at the weekly rates of crypto coins.</p>
+          <div class="cta-wrapper">
+            <a href="/weeklyprices">  <button class="btn primary">Learn more</button></a>
+          </div>
+          <div class="image-wrapper">
+            <img
+            src="/assets/images/checkweekly.jpg"
+            alt=""
+            height="280px"
+          />
+          </div>
+        </div>
+
+        <div class="card" style="background-color: #fbfbfd">
+          <h3>Chart</h3>
+          <p>View a coin chart to analyze and forecast.</p>
+          <div class="cta-wrapper">
+            <a href="/chart">  <button class="btn primary">Learn more</button></a>
+          </div>
+          <div class="image-wrapper">
+            <img
+            src="/assets/images/chart.jpg"
+            alt=""
+            height="280px"
+          />
+          </div>
+        </div>
+
+        <div class="card" style="background-color: #fbfbfd">
+          <h3>Compare Charts</h3>
+          <p>Compare rates of different coins on the same screen.</p>
+          <div class="cta-wrapper">
+            <a href="/chart/compare">  <button class="btn primary">Learn more</button></a>
+          </div>
+          <div class="image-wrapper">
+            <img
+            src="/assets/images/comparechart.jpg"
+            alt=""
+            height="280px"
+          />
+          </div>
+        </div>
+
+        <div class="card" style="background-color: #fbfbfd">
+          <h3>Add Alert</h3>
+          <p>Add an alert notification via email when price hits your level.</p>
+          <div class="cta-wrapper">
+            <a href="/addalert">  <button class="btn primary">Learn more</button></a>
+          </div>
+          <div class="image-wrapper">
+            <img
+            src="/assets/images/alert.jpg"
+            alt=""
+            height="280px"
+          />
+          </div>
+        </div>
+
+      </section>
+    </div>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        fetch("/user/dashboard/userinfo")
+          .then((response) => response.json())
+          .then((data) => {
+            const user = data.user;
+            const userSection = document.querySelector(".buttons");
+            console.log(user);
+            if (user) {
+              userSection.innerHTML = `
+              <a href="/user/dashboard">  <div>Welcome    <span>${user.username}</span></div></a>
+                          <a class="logout" href="/user/logout">Logout</a>
+                      `;
+            }
+          })
+          .catch((error) =>
+            console.error("Error fetching user details:", error)
+          );
+      });
+      
+      </script>
+  </body>
+</html>

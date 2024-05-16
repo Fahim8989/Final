@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Add Custom Coin</title>
+        <link rel="stylesheet" type="text/css" href="/styles.css" />
+
+    <style>
+    
+      h1 {
+        text-align: center;
+        color: rgb(205, 149, 18);
+      }
+
+      form {
+        background-color: #000000;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 0 20px rgb(205, 149, 18);
+        width: 300px;
+      }
+
+      label {
+        display: block;
+        margin-bottom: 8px;
+        color: rgb(255, 149, 18);
+      }
+
+      input {
+        width: 100%;
+        padding: 8px;
+        margin-bottom: 16px;
+        box-sizing: border-box;
+        border: 1px solid rgb(205, 149, 18);
+        border-radius: 4px;
+      }
+
+      button {
+        background-color: #000000;
+        color: rgb(255, 164, 6);
+        padding: 10px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        width: 100%;
+        border-radius: 2px;
+      }
+
+      button:hover {
+        background-color: rgb(255, 164, 6);
+        color: #000000;
+      }
+      .liveRates {
+        display: flex;
+        flex-direction: row;
+        color: white;
+      }
+      .liveRates div {
+        margin-right: 40px;
+      }
+      .liveRates div span {
+        margin-right: 20px;
+      }
+
+      * Style for the label */ label {
+        display: block;
+        margin-bottom: 8px;
+      }
+
+      select {
+        padding: 8px;
+        font-size: 16px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        width: 100%;
+      }
+
+      select option {
+        font-size: 14px;
+      }
+
+      .alert-container{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        margin-top: 100px;
+      }
+      .addalert{
+        padding: 10px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <nav>
+      <a href="/" class="logo">
+        <img src="/assets/images/logo.png" alt="logo" height="34px">
+        <h1 class="logo-text">Trading Pricer</h1>
+      </a>
+      <div class="links">
+        <a href="/">Home</a>
+        <a href="/about">About</a>
+      </div>
+      <div class="buttons" >
+        <a class="btn" href="/auth/login">SIGN IN</a>
+        <a class="btn" href="/auth/signup">SIGN UP</a>
+      </div>
+    </nav>
+<div class="alert-container">
+    <div class="liveRates">
+      <div>BTCUSD <span id="btcTrade"></span></div>
+      <div>ETHUSD <span id="ethTrade"></span></div>
+      <div>LTCUSD <span id="ltcTrade"></span></div>
+      <div></div>
+    </div>
+    <section class="addalert">
+      <h1>Add Alert</h1>
+
+      <h1 style="margin-bottom: 20px;">Set Price Alert</h1>
+      <form id="alertForm">
+        <label for="coinPair">Coin Pair:</label>
+        <select id="coinPair" name="coinPair" required>
+          <option value="BTCUSDT">BTC/USD</option>
+          <option value="ETHUSDT">ETH/USD</option>
+          <option value="LTCUSDT">LTC/USD</option>
+        </select>
+
+        <br />
+        <label for="targetPrice">Target Price:</label>
+        <input
+          type="number"
+          id="targetPrice"
+          name="targetPrice"
+          step="0.01"
+          required
+        />
+        <br />
+        <button type="button" onclick="saveAlert()">Save Alert</button>
+      </form>
+
+      <h2 style="margin: 20px;">Your Alerts</h2>
+      <ul id="alertsList"></ul>
+    </div>
+      <footer>
+        <div class="footer">
+          <div class="row">
+            <a href="mailto:mahme006@campus.goldsmiths.ac.uk"
+              ><img
+                height="32px"
+                src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAAACXBIWXMAAAsTAAALEwEAmpwYAAACFElEQVR4nO3YO2tUQRjG8RPFG14gFpbx0qRRv4CojZd8Ay1SLK5KCi8kjaJoZaGtKS1MZWMX1Eas1HhBsE2UJdhqmyKg5icH3sAQTXKWnN1zwPOHaYb3nXnenT0zz0yWNTQ0NDT0AgzgJCZwo6I2gRO5lm7F78cH9eEdhoqK34OvkbiEWbysqM2Ghpw57CpSwO1IWMTZrGIwElpybhZJmIngh1lNwGRoelMkuBPB7awmoB2aOkWC5yO4ldUEtELTfJHgpoDarQC242DpylYBB7CtzAKmYz8ey3oMxvA7n7PMAh5H3y+c66H48yE+Z6rMAnbgdVLEhR6IH8XPmOM9dpZWQPQP4lNiMa6UKP5qYhly3zPYk200iviYmKw7XTvFvx3v3WS8V//yO6WeA/nS4kUy6fTKX6wL0/g0GedZ/lfty0GGrXiUTJ7bj9NdiD+TWBYx1pa+n8S4nDjFnCcYXiN+OGKWWcSlSq0Ejq74LvJt8HnsKoejjUbf8ocqLkxHauGFsBnX8cP6fMe1PCerm5mLD/xi3KYWEtEL0ddO9/dau1Fswr5oAxscq9X3AspEU0DFaFagYvxvK9Cp4bNKq5sC3kbwZFYTcC80fS4SfCsxWiN9UbgGOJWc6g+KJOzGl0hYikfVqh535xID+A171y0gihhK3kjrwAwOFRK/4rp3HOO4X1Ebx7GNeqmGhoaGhmw1/gB/XKL57tX/VQAAAABJRU5ErkJggg=="
+            /></a>
+          </div>
+    
+          <div class="row">
+            <ul>
+              <li><a href="/">Home</a></li>
+              <li><a href="/about">About</a></li>
+              <li><a href="/auth/login">Sign In</a></li>
+              <li><a href="/auth/signup">Sign Up</a></li>
+            </ul>
+          </div>
+    
+          <div class="row">
+            Copyright © 2024 Trading Pricer - All rights reserved.
+          </div>
+        </div>
+      </footer>
+    </section>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        fetch("/user/dashboard/userinfo")
+          .then((response) => response.json())
+          .then((data) => {
+            const user = data.user;
+            const userSection = document.querySelector(".buttons");
+            console.log(user);
+            if (user) {
+              userSection.innerHTML = `
+              <a href="/user/dashboard">  <div>Welcome    <span>${user.username}</span></div></a>
+                          <a class="logout" href="/user/logout">Logout</a>
+                      `;
+            }
+          })
+          .catch((error) =>
+            console.error("Error fetching user details:", error)
+          );
+      });
+      
+      </script>
+    <script>
+      const btcTradeElement = document.getElementById("btcTrade");
+      const ltcTradeElement = document.getElementById("ltcTrade");
+      const ethTradeElement = document.getElementById("ethTrade");
+
+      const btcTrade = {
+        element: btcTradeElement,
+        oldPrice: 0,
+        limiter: {
+          lastUpdated: 0,
+          interval: 1000, // Update interval in milliseconds
+        },
+      };
+
+      const ltcTrade = {
+        element: ltcTradeElement,
+        oldPrice: 0,
+        limiter: {
+          lastUpdated: 0,
+          interval: 1000, // Update interval in milliseconds
+        },
+      };
+
+      const ethTrade = {
+        element: ethTradeElement,
+        oldPrice: 0,
+        limiter: {
+          lastUpdated: 0,
+          interval: 1000, // Update interval in milliseconds
+        },
+      };
+
+      const ws = new WebSocket("wss://stream.binance.com:9443/ws/!ticker@arr");
+
+      ws.onmessage = (event) => {
+        const data = JSON.parse(event.data);
+
+        data.forEach((ticker) => {
+          switch (ticker.s) {
+            case "BTCUSDT":
+              updateTradeUI(btcTrade, ticker.c, "BTCUSDT");
+              break;
+            case "LTCUSDT":
+              updateTradeUI(ltcTrade, ticker.c, "LTCUSDT");
+              break;
+            case "ETHUSDT":
+              updateTradeUI(ethTrade, ticker.c, "ETHUSDT");
+              break;
+            // Add more cases for other coin pairs as needed
+          }
+        });
+      };
+
+      function updateTradeUI(trade, price, coinPair) {
+        if (price > trade.oldPrice) {
+          trade.element.style.color = "green";
+        } else if (price === trade.oldPrice) {
+          trade.element.style.color = "white";
+        } else {
+          trade.element.style.color = "red";
+        }
+
+        trade.oldPrice = price;
+
+        // Rate limiter to update UI at a specified interval
+        const currentTime = Date.now();
+        if (currentTime - trade.limiter.lastUpdated > trade.limiter.interval) {
+          trade.limiter.lastUpdated = currentTime;
+          trade.element.innerText = parseFloat(price).toFixed(2);
+
+          // Fetch user's alerts for all pairs
+          // Fetch user's alerts for all pairs
+          fetch(`/addalert/alerts`)
+            .then((response) => response.json())
+            .then((data) => {
+              const alerts = data;
+              displayAlerts(alerts);
+
+              // Check if the current price crosses any alert's target price
+
+              alerts.forEach((alert) => {
+                if (
+                  alert.coin_pair === coinPair &&
+                  parseFloat(price) > alert.target_price
+                ) {
+                  // Alert the user
+                  console.log(
+                    `Alert: ${alert.coin_pair} crossed the target price of ${alert.target_price}`
+                  );
+                  sendEmail(alert.id, alert.coin_pair, alert.target_price);
+                  deleteAlert(alert.id);
+                }
+              });
+            })
+
+            .catch((error) => {
+              console.error("Error fetching alerts:", error);
+            });
+        }
+      }
+      function displayAlerts(alerts) {
+        const alertsList = document.getElementById("alertsList");
+        alertsList.innerHTML = "";
+
+        alerts.forEach((alert) => {
+          const listItem = document.createElement("li");
+          listItem.textContent = `${alert.coin_pair} - Target Price: ${alert.target_price}`;
+          alertsList.appendChild(listItem);
+        });
+      }
+
+      function saveAlert() {
+        const coinPair = document.getElementById("coinPair").value;
+        const targetPrice = document.getElementById("targetPrice").value;
+
+        fetch("/addalert", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ coinPair, targetPrice }),
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            if (data.success) {
+              alert("Price alert saved successfully!");
+            } else {
+              alert("Failed to save price alert. Please try again.");
+            }
+          })
+          .catch((error) => {
+            console.error("Error saving price alert:", error);
+            alert("Error saving price alert. Please try again later.");
+          });
+      }
+      function deleteAlert(alertId) {
+        // Send a request to the backend to delete the alert
+        fetch(`/addalert/delete/${alertId}`, {
+          method: "DELETE",
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            console.log("Alert deleted successfully:", data);
+          })
+          .catch((error) => {
+            console.error("Error deleting alert:", error);
+          });
+      }
+
+      function sendEmail(alertId, coinPair, targetPrice) {
+        fetch(`/addalert/sendEmail/${alertId}`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ coinPair, targetPrice }),
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            if (data.success) {
+              console.log("Email sent successfully");
+            } else {
+              console.error("Failed to send email:", data.error);
+            }
+          })
+          .catch((error) => {
+            console.error("Error sending email:", error);
+          });
+      }
+    </script>
+  </body>
+</html>

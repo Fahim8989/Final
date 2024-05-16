@@ -1,0 +1,214 @@
+<!-- searchInput.ejs -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search</title>
+    <link rel="stylesheet" type="text/css" href="styles.css" />
+    <style>
+
+h1 {
+    text-align: center;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 20px;
+}
+
+label {
+    margin-bottom: 10px;
+}
+
+input {
+    padding: 8px;
+    font-size: 16px;
+    width: 450px; 
+    margin: 15px;
+}
+
+.btncolor {
+    margin-bottom: 20px;
+    background-color: rgb(216, 155, 24);
+}
+
+
+.search-container {
+    margin-top: 90px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            color: white;
+            min-height: 70vh;
+        }
+
+        h1 {
+            padding-top: 10px;
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 80%;
+        }
+
+        th, td {
+            border: 1px solid rgb(216, 155, 24);
+            padding: 8px;
+            text-align: left;
+        }
+
+        th {
+            cursor: pointer;
+            background-color: rgb(216, 155, 24);
+        }
+
+        th:hover {
+            background-color: rgb(236, 155, 24);
+            color: black;
+        }
+
+        img {
+            width: 20px; /* Adjust the size of the image */
+            height: auto;
+            margin-right: 5px;
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <a href="/" class="logo">
+          <img src="/assets/images/logo.png" alt="logo" height="34px">
+          <h1 class="logo-text">Trading Pricer</h1>
+        </a>
+        <div class="links">
+          <a href="/">Home</a>
+          <a href="/about">About</a>
+        </div>
+        <div class="buttons" >
+          <a class="btn" href="/auth/login">SIGN IN</a>
+          <a class="btn" href="/auth/signup">SIGN UP</a>
+        </div>
+      </nav>
+    <div class="search-container">
+        <form id="searchForm">
+            <input type="text" id="searchTerm" name="searchTerm" required placeholder="Search by coin name or coin ID or coin Symbol">
+            <button class="btn btncolor" type="submit">Search&#128269;</button>
+        </form>
+
+        <!-- Display search term -->
+        <p id="searchTermParagraph"></p>
+
+        <!-- Search Results Table -->
+        <table id="searchResultsTable">
+            <thead>
+                <tr>
+                    <th>Coin ID</th>
+                    <th>Coin Name</th>
+                    <th>Coin Symbol</th>
+                </tr>
+            </thead>
+            <tbody id="searchResultsBody"></tbody>
+        </table>
+    </div>
+    <footer>
+        <div class="footer">
+          <div class="row">
+            <a href="mailto:mahme006@campus.goldsmiths.ac.uk"
+              ><img
+                height="32px"
+                src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAAACXBIWXMAAAsTAAALEwEAmpwYAAACFElEQVR4nO3YO2tUQRjG8RPFG14gFpbx0qRRv4CojZd8Ay1SLK5KCi8kjaJoZaGtKS1MZWMX1Eas1HhBsE2UJdhqmyKg5icH3sAQTXKWnN1zwPOHaYb3nXnenT0zz0yWNTQ0NDT0AgzgJCZwo6I2gRO5lm7F78cH9eEdhoqK34OvkbiEWbysqM2Ghpw57CpSwO1IWMTZrGIwElpybhZJmIngh1lNwGRoelMkuBPB7awmoB2aOkWC5yO4ldUEtELTfJHgpoDarQC242DpylYBB7CtzAKmYz8ey3oMxvA7n7PMAh5H3y+c66H48yE+Z6rMAnbgdVLEhR6IH8XPmOM9dpZWQPQP4lNiMa6UKP5qYhly3zPYk200iviYmKw7XTvFvx3v3WS8V//yO6WeA/nS4kUy6fTKX6wL0/g0GedZ/lfty0GGrXiUTJ7bj9NdiD+TWBYx1pa+n8S4nDjFnCcYXiN+OGKWWcSlSq0Ejq74LvJt8HnsKoejjUbf8ocqLkxHauGFsBnX8cP6fMe1PCerm5mLD/xi3KYWEtEL0ddO9/dau1Fswr5oAxscq9X3AspEU0DFaFagYvxvK9Cp4bNKq5sC3kbwZFYTcC80fS4SfCsxWiN9UbgGOJWc6g+KJOzGl0hYikfVqh535xID+A171y0gihhK3kjrwAwOFRK/4rp3HOO4X1Ebx7GNeqmGhoaGhmw1/gB/XKL57tX/VQAAAABJRU5ErkJggg=="
+            /></a>
+          </div>
+  
+          <div class="row">
+            <ul>
+              <li><a href="/">Home</a></li>
+              <li><a href="/about">About</a></li>
+              <li><a href="/auth/login">Sign In</a></li>
+              <li><a href="/auth/signup">Sign Up</a></li>
+            </ul>
+          </div>
+  
+          <div class="row">
+            Copyright © 2024 Trading Pricer - All rights reserved.
+          </div>
+        </div>
+      </footer>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            fetch("/user/dashboard/userinfo")
+          .then((response) => response.json())
+          .then((data) => {
+            const user = data.user;
+            const userSection = document.querySelector(".buttons");
+            console.log(user);
+            if (user) {
+              userSection.innerHTML = `
+              <a href="/user/dashboard">  <div>Welcome    <span>${user.username}</span></div></a>
+                          <a class="logout" href="/user/logout">Logout</a>
+                      `;
+            }
+          })
+          .catch((error) =>
+            console.error("Error fetching user details:", error)
+          );
+      });
+      
+
+            var searchForm = document.getElementById("searchForm");
+            var searchTermInput = document.getElementById("searchTerm");
+            var searchTermParagraph = document.getElementById("searchTermParagraph");
+            var searchResultsTable = document.getElementById("searchResultsTable");
+            var searchResultsBody = document.getElementById("searchResultsBody");
+
+            searchForm.addEventListener("submit", function (event) {
+                event.preventDefault();
+
+                // Get the search term from the input
+                var searchTerm = searchTermInput.value.trim();
+
+                // Display search term
+                searchTermParagraph.textContent = 'Search results for "' + searchTerm + '"';
+
+                // Fetch search results from API
+                fetch('/search/api', {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': 'Bearer ', // Include your authentication token here
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ searchTerm: searchTerm })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    // Clear previous search results
+                    searchResultsBody.innerHTML = "";
+
+                    // Update search results
+                    var searchResults = data.searchResults;
+
+                    if (searchResults && searchResults.length > 0) {
+                        searchResults.forEach(function (result) {
+                            var row = document.createElement("tr");
+                            row.innerHTML = `
+                                <td>${result.coin_id}</td>
+                                <td>${result.coin_name}</td>
+                                <td>${result.coin_symbol}</td>
+                            `;
+                            searchResultsBody.appendChild(row);
+                        });
+                    } else {
+                        searchResultsBody.innerHTML = "<tr><td colspan='3'>No results found.</td></tr>";
+                    }
+                })
+                .catch(error => console.error('Error fetching search results:', error));
+            });
+        
+    </script>
+</body>
+</html>

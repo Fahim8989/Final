@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crypto Rates</title>
+    <link rel="stylesheet" type="text/css" href="styles.css" />
+    <style>
+      
+      .cryptorates{
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+
+            margin-top: 90px;
+        }
+        h1{
+            padding-top: 10px;
+        }
+        table {
+            border-collapse: collapse;
+            width: 80%;
+        }
+
+        th, td {
+            border: 1px solid rgb(224, 174, 7);
+            padding: 8px;
+            text-align: left;
+        }
+
+        th {
+            cursor: pointer;
+            background-color:rgb(216, 155, 24);
+        }
+        
+        
+        th:hover {
+            background-color: rgb(216, 155, 24);
+            color: black;
+        }
+
+        img {
+            width: 20px; /* Adjust the size of the image */
+            height: auto;
+            margin-right: 5px;
+        }
+        nav img{
+            width: auto;
+            height: 34px;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <nav>
+        <a href="/" class="logo">
+          <img src="/assets/images/logo.png" alt="logo" height="34px">
+          <h1 class="logo-text">Trading Pricer</h1>
+        </a>
+        <div class="links">
+          <a href="/">Home</a>
+          <a href="/about">About</a>
+        </div>
+        <div class="buttons" >
+          <a class="btn" href="/auth/login">SIGN IN</a>
+          <a class="btn" href="/auth/signup">SIGN UP</a>
+        </div>
+      </nav>
+
+    <section class="cryptorates">
+    <h1 style="color: rgb(216, 155, 24);">Your Favorite Coins</h1>
+
+    <table id="cryptoTable">
+       <i style="color: rgb(216, 155, 24);">*click on column name for sorting </i>
+        <thead>
+            <tr>
+                <th onclick="sortTable(0)">Name</th>
+                <th onclick="sortTable(1)">Symbol</th>
+                <th>Icon</th>
+                <th>Price</th>
+                <th >Actions</th>
+            </tr>
+        </thead>
+        <tbody id="favoriteCoinsBody"></tbody>
+
+    </table>
+  <!---------------------------Footer------------------------------------------------------------------------------->
+  <footer>
+    <div class="footer">
+      <div class="row">
+        <a href="mailto:mahme006@campus.goldsmiths.ac.uk"
+          ><img
+            height="32px"
+            src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAAACXBIWXMAAAsTAAALEwEAmpwYAAACFElEQVR4nO3YO2tUQRjG8RPFG14gFpbx0qRRv4CojZd8Ay1SLK5KCi8kjaJoZaGtKS1MZWMX1Eas1HhBsE2UJdhqmyKg5icH3sAQTXKWnN1zwPOHaYb3nXnenT0zz0yWNTQ0NDT0AgzgJCZwo6I2gRO5lm7F78cH9eEdhoqK34OvkbiEWbysqM2Ghpw57CpSwO1IWMTZrGIwElpybhZJmIngh1lNwGRoelMkuBPB7awmoB2aOkWC5yO4ldUEtELTfJHgpoDarQC242DpylYBB7CtzAKmYz8ey3oMxvA7n7PMAh5H3y+c66H48yE+Z6rMAnbgdVLEhR6IH8XPmOM9dpZWQPQP4lNiMa6UKP5qYhly3zPYk200iviYmKw7XTvFvx3v3WS8V//yO6WeA/nS4kUy6fTKX6wL0/g0GedZ/lfty0GGrXiUTJ7bj9NdiD+TWBYx1pa+n8S4nDjFnCcYXiN+OGKWWcSlSq0Ejq74LvJt8HnsKoejjUbf8ocqLkxHauGFsBnX8cP6fMe1PCerm5mLD/xi3KYWEtEL0ddO9/dau1Fswr5oAxscq9X3AspEU0DFaFagYvxvK9Cp4bNKq5sC3kbwZFYTcC80fS4SfCsxWiN9UbgGOJWc6g+KJOzGl0hYikfVqh535xID+A171y0gihhK3kjrwAwOFRK/4rp3HOO4X1Ebx7GNeqmGhoaGhmw1/gB/XKL57tX/VQAAAABJRU5ErkJggg=="
+        /></a>
+      </div>
+
+      <div class="row">
+        <ul>
+          <li><a href="/">Home</a></li>
+          <li><a href="/about">About</a></li>
+          <li><a href="/auth/login">Sign In</a></li>
+          <li><a href="/auth/signup">Sign Up</a></li>
+        </ul>
+      </div>
+
+      <div class="row">
+        Copyright © 2024 Trading Pricer - All rights reserved.
+      </div>
+    </div>
+  </footer>
+ <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        fetch("/user/dashboard/userinfo")
+          .then((response) => response.json())
+          .then((data) => {
+            const user = data.user;
+            const userSection = document.querySelector(".buttons");
+            console.log(user);
+            if (user) {
+              userSection.innerHTML = `
+              <a href="/user/dashboard">  <div>Welcome    <span>${user.username}</span></div></a>
+                          <a class="logout" href="/user/logout">Logout</a>
+                      `;
+            }
+          })
+          .catch((error) =>
+            console.error("Error fetching user details:", error)
+          );
+      });
+      
+      </script>
+    <script>
+            document.addEventListener("DOMContentLoaded", function () {
+                // Fetch favorite coins from API
+                fetch('/favorites/api', {
+                    method: 'GET',
+                    headers: {
+                        'Authorization': 'Bearer ' , // Include your authentication token here
+                        'Content-Type': 'application/json'
+                    },
+                })
+                .then(response => response.json())
+                .then(data => {
+                    var favoriteCoins = data.favoriteCoins; // Include the actual favorite coins data
+                    var favoriteCoinsBody = document.getElementById("favoriteCoinsBody");
+
+                    if (favoriteCoins && favoriteCoins.length > 0) {
+                        favoriteCoins.forEach(function (coin) {
+                            var row = document.createElement("tr");
+                            row.innerHTML = `
+                                <td>${coin.coin_name}</td>
+                                <td>${coin.coin_symbol}</td>
+                                <td><img src="${coin.coin_image}" alt="${coin.symbol}"></td>
+                                <td>${coin.coin_current_price}</td>
+                                <td>
+                                    <form action="/favorites/unfavorite/${coin.coin_id}" method="post">
+                                        <button type="submit">Unfavorite&#128148;</button>
+                                    </form>
+                                </td>
+                            `;
+                            favoriteCoinsBody.appendChild(row);
+                        });
+                    } else {
+                        // Handle case when there are no favorite coins
+                        favoriteCoinsBody.innerHTML = "<tr><td colspan='5'>No favorite coins found.</td></tr>";
+                    }
+                })
+                .catch(error => console.error('Error fetching favorite coins:', error));
+            });
+        function sortTable(columnIndex) {
+            const table = document.getElementById("cryptoTable");
+            const rows = Array.from(table.rows).slice(1); // Exclude the header row
+    
+            rows.sort((a, b) => {
+                let aValue = a.cells[columnIndex].innerText.toLowerCase();
+                let bValue = b.cells[columnIndex].innerText.toLowerCase();
+    
+                // Special handling for Name and Symbol columns
+                if (columnIndex === 0 || columnIndex === 1) {
+                    aValue = aValue.trim(); // Remove leading/trailing whitespaces
+                    bValue = bValue.trim();
+                }
+    
+                // Numeric sorting for Current Price column
+                if (columnIndex === 2) {
+                    aValue = parseFloat(aValue.replace(/[^0-9.-]+/g, ''));
+                    bValue = parseFloat(bValue.replace(/[^0-9.-]+/g, ''));
+                }
+    
+                if (aValue < bValue) return -1;
+                if (aValue > bValue) return 1;
+                return 0;
+            });
+    
+            // Check if the table is already sorted in ascending order
+            const isSortedAscending = table.getAttribute("data-sorted-column") === String(columnIndex);
+    
+            // Reverse the array for descending order
+            if (isSortedAscending) {
+                rows.reverse();
+            }
+    
+            // Clear existing rows from the table
+            table.querySelector("tbody").innerHTML = "";
+    
+            // Append sorted rows to the table
+            rows.forEach(row => {
+                table.querySelector("tbody").appendChild(row);
+            });
+    
+            // Update the sorted column attribute
+            table.setAttribute("data-sorted-column", isSortedAscending ? "" : String(columnIndex));
+        }
+    </script>
+    
+    
+</section>
+</body>
+</html>
+
+   

@@ -1,0 +1,263 @@
+<!-- views/CryptoRate.ejs -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crypto Rates</title>
+    <link rel="stylesheet" type="text/css" href="/styles.css" />
+
+    <style>
+        /* body{
+            background-color:rgb(0, 0, 0);
+            color:rgb(255, 251, 241);
+        } */
+        .cryptorates{
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+
+            margin-top: 90px;
+        }
+        h1{
+            padding-top: 10px;
+        }
+        table {
+            border-collapse: collapse;
+            width: 80%;
+        }
+
+        th, td {
+            border: 1px solid rgb(224, 174, 7);
+            padding: 8px;
+            text-align: left;
+        }
+
+        th {
+            cursor: pointer;
+            background-color:rgb(216, 155, 24);
+        }
+        
+        
+        th:hover {
+            background-color: rgb(216, 155, 24);
+            color: black;
+        }
+
+        img {
+            width: 20px; /* Adjust the size of the image */
+            height: auto;
+            margin-right: 5px;
+        }
+        nav img{
+            width: auto;
+            height: 34px;
+            margin-top: 10px;
+        }
+        #cryptoTable{min-height: 80vh}
+    </style>
+</head>
+<body>
+    <nav>
+        <a href="/" class="logo">
+          <img src="/assets/images/logo.png" alt="logo" height="34px">
+          <h1 class="logo-text">Trading Pricer</h1>
+        </a>
+        <div class="links">
+          <a href="/">Home</a>
+          <a href="/about">About</a>
+        </div>
+        <div class="buttons" >
+          <a class="btn" href="/auth/login">SIGN IN</a>
+          <a class="btn" href="/auth/signup">SIGN UP</a>
+        </div>
+      </nav>
+    <section class="cryptorates">
+    <h1> Current Crypto Market Rates</h1>
+
+    <table id="cryptoTable">
+       <i>*Click on each column name to sort or filter! </i>
+        <thead>
+            <tr>
+                <th onclick="sortTable(0)">Name</th>
+                <th onclick="sortTable(1)">Symbol</th>
+                <th onclick="sortTable(2)">Current Price (USD)</th>
+                <!-- Add other table headers as needed -->
+                <th >Actions</th>
+            </tr>
+        </thead>
+        <tbody id="cryptoTableBody"></tbody>
+    </table>
+    <footer>
+        <div class="footer">
+          <div class="row">
+            <a href="mailto:mahme006@campus.goldsmiths.ac.uk"
+              ><img
+                height="32px"
+                src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAAACXBIWXMAAAsTAAALEwEAmpwYAAACFElEQVR4nO3YO2tUQRjG8RPFG14gFpbx0qRRv4CojZd8Ay1SLK5KCi8kjaJoZaGtKS1MZWMX1Eas1HhBsE2UJdhqmyKg5icH3sAQTXKWnN1zwPOHaYb3nXnenT0zz0yWNTQ0NDT0AgzgJCZwo6I2gRO5lm7F78cH9eEdhoqK34OvkbiEWbysqM2Ghpw57CpSwO1IWMTZrGIwElpybhZJmIngh1lNwGRoelMkuBPB7awmoB2aOkWC5yO4ldUEtELTfJHgpoDarQC242DpylYBB7CtzAKmYz8ey3oMxvA7n7PMAh5H3y+c66H48yE+Z6rMAnbgdVLEhR6IH8XPmOM9dpZWQPQP4lNiMa6UKP5qYhly3zPYk200iviYmKw7XTvFvx3v3WS8V//yO6WeA/nS4kUy6fTKX6wL0/g0GedZ/lfty0GGrXiUTJ7bj9NdiD+TWBYx1pa+n8S4nDjFnCcYXiN+OGKWWcSlSq0Ejq74LvJt8HnsKoejjUbf8ocqLkxHauGFsBnX8cP6fMe1PCerm5mLD/xi3KYWEtEL0ddO9/dau1Fswr5oAxscq9X3AspEU0DFaFagYvxvK9Cp4bNKq5sC3kbwZFYTcC80fS4SfCsxWiN9UbgGOJWc6g+KJOzGl0hYikfVqh535xID+A171y0gihhK3kjrwAwOFRK/4rp3HOO4X1Ebx7GNeqmGhoaGhmw1/gB/XKL57tX/VQAAAABJRU5ErkJggg=="
+            /></a>
+          </div>
+  
+          <div class="row">
+            <ul>
+              <li><a href="/">Home</a></li>
+              <li><a href="/about">About</a></li>
+              <li><a href="/auth/login">Sign In</a></li>
+              <li><a href="/auth/signup">Sign Up</a></li>
+            </ul>
+          </div>
+  
+          <div class="row">
+            Copyright © 2024 Trading Pricer - All rights reserved.
+          </div>
+        </div>
+      </footer>
+
+    <script>
+  document.addEventListener("DOMContentLoaded", function () {
+            // Fetch crypto rates from your server
+            fetch('/user/api/cryptorates', {
+                method: 'GET',
+                headers: {
+                    'Authorization': 'Bearer ' ,
+                    'Content-Type': 'application/json'
+                },
+            })
+            .then(response => response.json())
+            .then(data => {
+                var cryptoRates = data.cryptoRates;
+                var cryptoTableBody = document.getElementById("cryptoTableBody");
+
+                cryptoRates.forEach(function(crypto) {
+                    var row = document.createElement("tr");
+
+                    var nameCell = document.createElement("td");
+                    nameCell.textContent = crypto.name;
+                    row.appendChild(nameCell);
+
+                    var symbolCell = document.createElement("td");
+                    var img = document.createElement("img");
+                    img.src = crypto.image;
+                    img.alt = crypto.symbol;
+                    symbolCell.appendChild(img);
+                    symbolCell.innerHTML += " " + crypto.symbol;
+                    row.appendChild(symbolCell);
+
+                    var priceCell = document.createElement("td");
+                    priceCell.textContent = crypto.current_price;
+                    row.appendChild(priceCell);
+
+                    var actionCell = document.createElement("td");
+                    var form = document.createElement("form");
+                    form.action = "/favorites/favorite/" + crypto.id;
+                    form.method = "post";
+
+                    var symbolInput = document.createElement("input");
+                    symbolInput.type = "hidden";
+                    symbolInput.name = "symbol";
+                    symbolInput.value = crypto.symbol;
+                    form.appendChild(symbolInput);
+
+                    var nameInput = document.createElement("input");
+                    nameInput.type = "hidden";
+                    nameInput.name = "name";
+                    nameInput.value = crypto.name;
+                    form.appendChild(nameInput);
+
+                    var imageInput = document.createElement("input");
+                    imageInput.type = "hidden";
+                    imageInput.name = "image";
+                    imageInput.value = crypto.image;
+                    form.appendChild(imageInput);
+
+                    var priceInput = document.createElement("input");
+                    priceInput.type = "hidden";
+                    priceInput.name = "current_price";
+                    priceInput.value = crypto.current_price;
+                    form.appendChild(priceInput);
+
+                    var addButton = document.createElement("button");
+                    addButton.type = "submit";
+                    addButton.textContent = "Add to Favorites";
+                    form.appendChild(addButton);
+
+                    actionCell.appendChild(form);
+                    row.appendChild(actionCell);
+
+                    cryptoTableBody.appendChild(row);
+                });
+            })
+            .catch(error => console.error('Error fetching crypto rates:', error));
+        });
+        
+        function sortTable(columnIndex) {
+            const table = document.getElementById("cryptoTable");
+            const rows = Array.from(table.rows).slice(1); // Exclude the header row
+    
+            rows.sort((a, b) => {
+                let aValue = a.cells[columnIndex].innerText.toLowerCase();
+                let bValue = b.cells[columnIndex].innerText.toLowerCase();
+    
+                // Special handling for Name and Symbol columns
+                if (columnIndex === 0 || columnIndex === 1) {
+                    aValue = aValue.trim(); // Remove leading/trailing whitespaces
+                    bValue = bValue.trim();
+                }
+    
+                // Numeric sorting for Current Price column
+                if (columnIndex === 2) {
+                    aValue = parseFloat(aValue.replace(/[^0-9.-]+/g, ''));
+                    bValue = parseFloat(bValue.replace(/[^0-9.-]+/g, ''));
+                }
+    
+                if (aValue < bValue) return -1;
+                if (aValue > bValue) return 1;
+                return 0;
+            });
+    
+            // Check if the table is already sorted in ascending order
+            const isSortedAscending = table.getAttribute("data-sorted-column") === String(columnIndex);
+    
+            // Reverse the array for descending order
+            if (isSortedAscending) {
+                rows.reverse();
+            }
+    
+            // Clear existing rows from the table
+            table.querySelector("tbody").innerHTML = "";
+    
+            // Append sorted rows to the table
+            rows.forEach(row => {
+                table.querySelector("tbody").appendChild(row);
+            });
+    
+            // Update the sorted column attribute
+            table.setAttribute("data-sorted-column", isSortedAscending ? "" : String(columnIndex));
+        }
+
+        document.addEventListener("DOMContentLoaded", function () {
+        fetch("/user/dashboard/userinfo")
+          .then((response) => response.json())
+          .then((data) => {
+            const user = data.user;
+            const userSection = document.querySelector(".buttons");
+            console.log(user);
+            if (user) {
+              userSection.innerHTML = `
+              <a href="/user/dashboard">  <div>Welcome    <span>${user.username}</span></div></a>
+                          <a class="logout" href="/user/logout">Logout</a>
+                      `;
+            }
+          })
+          .catch((error) =>
+            console.error("Error fetching user details:", error)
+          );
+      });
+      
+    </script>
+    
+    
+</section>
+</body>
+</html>

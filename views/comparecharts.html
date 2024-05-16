@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Compare Charts</title>
+    <link rel="stylesheet" type="text/css" href="/styles.css" />
+
+    <script
+      type="text/javascript"
+      src="https://s3.tradingview.com/tv.js"
+    ></script>
+    <style>
+      .compare {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      flex-direction: row;
+      padding: 20px;
+      }
+
+      .chart-div{
+        width: 100%;
+        margin: 10px;
+      }
+      .selection-options{
+        width: 100%;
+        margin-bottom: 20px ;
+      }
+
+      select {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    padding: 5px 10px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #fff;
+    cursor: pointer;
+}
+
+/* Style the options within the dropdown */
+select option {
+    padding: 10px;
+}
+
+/* Style when the dropdown is open */
+select:focus {
+    border-color: #4CAF50;
+    box-shadow: 0 0 5px rgba(76, 175, 80, 0.5);
+}
+
+    </style>
+  </head>
+  <body>
+    <nav>
+      <a href="/" class="logo">
+        <img src="/assets/images/logo.png" alt="logo" height="34px">
+        <h1 class="logo-text">Trading Pricer</h1>
+      </a>
+      <div class="links">
+        <a href="/">Home</a>
+        <a href="/about">About</a>
+      </div>
+      <div class="buttons" >
+        <a class="btn" href="/auth/login">SIGN IN</a>
+        <a class="btn" href="/auth/signup">SIGN UP</a>
+      </div>
+    </nav>
+    <h1>Compare Charts</h1>
+    <section class="compare">
+      <div class="chart-div">
+        <div class="selection-options">
+        <label for="symbol1">Select Symbol for Chart 1:</label>
+        <select id="symbol1">
+          <option value="BINANCE:BTCUSD">BTC/USD</option>
+          <option value="BINANCE:ETHUSD">ETH/USD</option>
+          <option value="BINANCE:BNBUSD">BNB/USD</option>
+          <option value="BINANCE:ADAUSD">ADA/USD</option>
+          <option value="BINANCE:XRPUSD">XRP/USD</option>
+          <option value="BINANCE:DOTUSD">DOT/USD</option>
+          <option value="BINANCE:LTCUSD">LTC/USD</option>
+          <option value="BINANCE:BCHUSD">BCH/USD</option>
+          <option value="BINANCE:SOLUSD">SOL/USD</option>
+        </select>
+
+        <!-- Interval Selection for Chart 1 -->
+        <label for="interval1">Select Interval for Chart 1:</label>
+        <select id="interval1">
+          <option value="60">1h</option>
+
+          <option value="1">1min</option>
+          <option value="5">5min</option>
+          <option value="15">15min</option>
+          <option value="30">30min</option>
+          <option value="240">4h</option>
+          <option value="D">1 Day</option>
+          <option value="W">1 Week</option>
+        </select>
+
+       </div>
+        <div id="chart1-container"  style="height: 500px; width: 100%; float: left" ></div>
+      </div>
+
+      <div class="chart-div">
+        <div class="selection-options">
+        <!-- Symbol Selection for Chart 2 -->
+        <label for="symbol2">Select Symbol for Chart 2:</label>
+        <select id="symbol2">
+          <option value="BINANCE:ETHUSD">ETH/USD</option>
+          <option value="BINANCE:BTCUSD">BTC/USD</option>
+          <option value="BINANCE:BNBUSD">BNB/USD</option>
+          <option value="BINANCE:ADAUSD">ADA/USD</option>
+          <option value="BINANCE:XRPUSD">XRP/USD</option>
+          <option value="BINANCE:DOTUSD">DOT/USD</option>
+          <option value="BINANCE:LTCUSD">LTC/USD</option>
+          <option value="BINANCE:BCHUSD">BCH/USD</option>
+          <option value="BINANCE:SOLUSD">SOL/USD</option>
+        </select>
+
+        <!-- Interval Selection for Chart 2 -->
+        <label for="interval2">Select Interval for Chart 2:</label>
+        <select id="interval2">
+          <option value="60">1h</option>
+
+          <option value="1">1min</option>
+          <option value="5">5min</option>
+          <option value="15">15min</option>
+          <option value="30">30min</option>
+          <option value="240">4h</option>
+          <option value="D">1 Day</option>
+          <option value="W">1 Week</option>
+        </select>
+      </div>
+        <div
+          id="chart2-container"
+          style="height: 500px; width: 100%; float: left"
+        ></div>
+      </div>
+    </section>
+    <footer>
+      <div class="footer">
+        <div class="row">
+          <a href="mailto:mahme006@campus.goldsmiths.ac.uk"
+            ><img
+              height="32px"
+              src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAAACXBIWXMAAAsTAAALEwEAmpwYAAACFElEQVR4nO3YO2tUQRjG8RPFG14gFpbx0qRRv4CojZd8Ay1SLK5KCi8kjaJoZaGtKS1MZWMX1Eas1HhBsE2UJdhqmyKg5icH3sAQTXKWnN1zwPOHaYb3nXnenT0zz0yWNTQ0NDT0AgzgJCZwo6I2gRO5lm7F78cH9eEdhoqK34OvkbiEWbysqM2Ghpw57CpSwO1IWMTZrGIwElpybhZJmIngh1lNwGRoelMkuBPB7awmoB2aOkWC5yO4ldUEtELTfJHgpoDarQC242DpylYBB7CtzAKmYz8ey3oMxvA7n7PMAh5H3y+c66H48yE+Z6rMAnbgdVLEhR6IH8XPmOM9dpZWQPQP4lNiMa6UKP5qYhly3zPYk200iviYmKw7XTvFvx3v3WS8V//yO6WeA/nS4kUy6fTKX6wL0/g0GedZ/lfty0GGrXiUTJ7bj9NdiD+TWBYx1pa+n8S4nDjFnCcYXiN+OGKWWcSlSq0Ejq74LvJt8HnsKoejjUbf8ocqLkxHauGFsBnX8cP6fMe1PCerm5mLD/xi3KYWEtEL0ddO9/dau1Fswr5oAxscq9X3AspEU0DFaFagYvxvK9Cp4bNKq5sC3kbwZFYTcC80fS4SfCsxWiN9UbgGOJWc6g+KJOzGl0hYikfVqh535xID+A171y0gihhK3kjrwAwOFRK/4rp3HOO4X1Ebx7GNeqmGhoaGhmw1/gB/XKL57tX/VQAAAABJRU5ErkJggg=="
+          /></a>
+        </div>
+
+        <div class="row">
+          <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/about">About</a></li>
+            <li><a href="/auth/login">Sign In</a></li>
+            <li><a href="/auth/signup">Sign Up</a></li>
+          </ul>
+        </div>
+
+        <div class="row">
+          Copyright © 2024 Trading Pricer - All rights reserved.
+        </div>
+      </div>
+    </footer>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        fetch("/user/dashboard/userinfo")
+          .then((response) => response.json())
+          .then((data) => {
+            const user = data.user;
+            const userSection = document.querySelector(".buttons");
+            console.log(user);
+            if (user) {
+              userSection.innerHTML = `
+              <a href="/user/dashboard">  <div>Welcome    <span>${user.username}</span></div></a>
+                          <a class="logout" href="/user/logout">Logout</a>
+                      `;
+            }
+          })
+          .catch((error) =>
+            console.error("Error fetching user details:", error)
+          );
+      });
+      
+      </script>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        
+      function handleChart1() {
+        const symbolSelect1 = document.getElementById("symbol1");
+        const intervalSelect1 = document.getElementById("interval1");
+        try {
+          console.log(symbolSelect1.value);
+          const symbol1 = symbolSelect1.value;
+          const interval1 = intervalSelect1.value;
+          new TradingView.widget({
+            autosize: true,
+            symbol: symbol1,
+            interval: interval1,
+            timezone: "Etc/UTC",
+            theme: "dark",
+            style: "1",
+            locale: "en",
+            enable_publishing: false,
+            container_id: "chart1-container",
+
+            allow_symbol_change: false,
+            hide_top_toolbar: true,
+            hide_side_toolbar: true,
+          });
+        } catch (error) {
+          console.error("Something wrong in creating:", error);
+        }
+      }
+
+
+      function handleChart2() {
+        const symbolSelect2 = document.getElementById("symbol2");
+        const intervalSelect2 = document.getElementById("interval2");
+        try {
+          console.log(symbolSelect2.value);
+          const symbol2 = symbolSelect2.value;
+          const interval2 = intervalSelect2.value;
+          new TradingView.widget({
+            autosize: true,
+            symbol: symbol2,
+            interval: interval2,
+            timezone: "Etc/UTC",
+            theme: "dark",
+            style: "1",
+            locale: "en",
+            enable_publishing: false,
+            container_id: "chart2-container",
+
+            allow_symbol_change: false,
+            hide_top_toolbar: true,
+            hide_side_toolbar: true,
+          });
+        } catch (error) {
+          console.error("Something wrong in creating:", error);
+        }
+      }
+
+      
+      handleChart1();
+      handleChart2();
+      document.getElementById("symbol1").addEventListener("change", function () {handleChart1(); });
+      document.getElementById("interval1").addEventListener("change", function () {handleChart1(); });;
+
+      document.getElementById("symbol2").addEventListener("change", function () {handleChart2(); });
+      document.getElementById("interval2").addEventListener("change", function () {handleChart2(); });;
+
+    });
+    </script>
+  </body>
+</html>

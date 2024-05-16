@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>About Trading Pricer</title>
+    <link rel="stylesheet" type="text/css" href="main.css" />
+    <link rel="stylesheet" type="text/css" href="header.css" />
+  </head>
+
+  <body>
+    <header>
+      <nav>
+        <div class="logo">
+          <a href="/">Trading Forum</a>
+        </div>
+        <div class="nav-links">
+          <a href="/">Home</a>
+          <a href="/about">About</a>
+        </div>
+
+        <div class="user-section" id="welcomeMessage">
+          <a href="/auth/login">Sign In</a>
+          <a href="/auth/signup">Sign Up</a>
+        </div>
+      </nav>
+    </header>
+    <section id="about">
+      <h1>Welcome to <span>Trading Pricer</span></h1>
+      <p>
+        We provide you with the current market price ranges of select coins!
+      </p>
+      <p>
+        At Trading Price Forum, we are passionate about creating a thriving
+        space for cryptocurrency enthusiasts and traders alike. Our platform
+        offers a seamless experience, allowing users to stay connected with
+        real-time crypto rates, discover valuable insights, and actively
+        participate in a dynamic community.
+      </p>
+      <p>
+        Whether you're a seasoned trader or a newcomer to the crypto world, our
+        user-friendly interface, secure login/logout features, personalized
+        dashboard, and the ability to add favorite coins make Trading Price
+        Forum your one-stop destination for an enriched and informed crypto
+        trading journey.
+      </p>
+      <p>
+        Join us in shaping the future of crypto discussions and empowering every
+        user with the tools they need to navigate the exciting world of digital
+        assets.
+      </p>
+
+      <p>Thank you!</p>
+    </section>
+  </body>
+</html>
+        <!---------------------------Footer------------------------------------------------------------------------------->
+        <footer class="sticky-footer">
+          <div class="footer-txt">
+              <h1>Trading Pricer</h1>
+              <p>The official website of Trading Pricer.</p>
+              <ul class="socials-footer">
+                  <li><a href="#top">Back to Top</a></li>
+                  <li><a href="mailto: mahme006@campus.goldsmiths.ac.uk">E-Mail</a></li>
+              </ul>
+              <p>&copy; Trading Pricer 2023</p>
+          </div>
+      </footer>
+  </main>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      fetch("/user/dashboard/userinfo") // Assuming this is your endpoint for user details
+        .then((response) => response.json())
+        .then((data) => {
+          const user = data.user;
+          // Now you can use the user data to manipulate the DOM
+          const welcomeMessage = document.querySelector("#welcomeMessage");
+          if (user) {
+            welcomeMessage.innerHTML = `Welcome ${user.username}`;
+          }
+
+          const userSection = document.querySelector(".user-section");
+
+          if (user) {
+            userSection.innerHTML = `
+                          <div>Welcome <span>${user.username}</span></div>
+                          <a class="logout" href="/user/logout">Logout</a>
+                      `;
+          } else {
+            userSection.innerHTML = `
+                          <a href="/auth/login">Sign In</a>
+                          <a href="/auth/signup">Sign Up</a>
+                      `;
+          }
+        })
+        .catch((error) =>
+          console.error("Error fetching user details:", error)
+        );
+    });
+  </script>
+</body>
+</html>

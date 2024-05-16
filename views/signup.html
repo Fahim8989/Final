@@ -1,0 +1,98 @@
+<!-- src/views/signup.ejs -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Signup</title>
+    <style>
+           .signup {
+        font-family: 'Arial', sans-serif;
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+    }
+
+    h1 {
+        text-align: center;
+        color: rgb(205, 149, 18);
+    }
+
+    form {
+        background-color: #000000;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 0 20px rgb(205, 149, 18);
+        width: 300px;
+    }
+
+    label {
+        display: block;
+        margin-bottom: 8px;
+        color: rgb(255, 149, 18);
+    }
+
+    input {
+        width: 100%;
+        padding: 8px;
+        margin-bottom: 16px;
+        box-sizing: border-box;
+        border: 1px solid rgb(205, 149, 18);
+        border-radius: 4px;
+    }
+
+    button {
+        background-color: #000000;
+        color: rgb(255, 164, 6);
+        padding: 10px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        width: 100%;
+        border-radius: 2px;
+    }
+
+    button:hover {
+        background-color:rgb(255, 164, 6);
+        color: #000000;
+    }
+    
+    </style>
+</head>
+<body class="signup">
+    <h1>Signup</h1>
+    <span class="s1" style="color:rgb(255, 164, 6); margin: 20px;"> Join now for FREE! Track your favourite coins with ease at Trading Pricer &#128200;&#129502;</span>
+    <form id="signupForm" action="/auth/signup" method="post">
+        <label for="username">Username:</label>
+        <input type="text" id="username" name="username" pattern="[a-zA-Z][a-zA-Z0-9]*" title="Username should start with a letter and can include letters and digits" required>
+        <br>
+        <label for="email">Email:</label>
+        <input type="text" id="email" name="email"  required>
+        <br>
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" pattern="^(?=.*[a-zA-Z])(?=.*\d).+$" title="Password must contain at least one letter and one number" required>
+        <br>
+        <button type="submit">Signup</button>
+    </form>
+
+    <script>
+        // JavaScript validation
+        document.getElementById('signupForm').addEventListener('submit', function (event) {
+            const passwordInput = document.getElementById('password');
+            const emailInput = document.getElementById('email');
+
+            if (!passwordInput.checkValidity()) {
+                alert('Please enter a valid password.');
+                event.preventDefault();
+            }
+
+        });
+    </script>
+</body>
+</html>

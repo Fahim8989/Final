@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Trading Pricer | Tracks all markets</title>
+    <link
+      rel="shortcut icon"
+      href="/assets/images/favicon.ico"
+      type="image/x-icon"
+    />
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <section class="hero">
+      <nav>
+        <a href="/" class="logo">
+         <img src="/assets/images/logo.png" alt="logo" height="34px">
+          <h1 class="logo-text">Trading Pricer</h1>
+        </a>
+        <div class="links">
+          <a href="/">Home</a>
+          <a href="/about">About</a>
+        </div>
+        <div class="buttons">
+          <a class="btn" href="/auth/login">SIGN IN</a>
+          <a class="btn" href="/auth/signup">SIGN UP</a>
+        </div>
+      </nav>
+
+      <div class="content">
+        <h1 class="title1">Everything you need</h1>
+        <h1 class="title2">In one hub.</h1>
+        <p class="subtitle">
+          The home of crypto currencies rates<br />
+          and updates.
+        </p>
+        <div class="search-button-wrapper">
+          <div class="buttons-wrapper">
+            <a href="#">
+              <img src="./assets/images/bitcoin.svg" alt="bitcoin" />
+              <div class="info">
+                <p class="title">BTCUSD</p>
+                <p id="btclive">52805.25 <span>USD</span></p>
+              </div>
+            </a>
+            <a href="#">
+              <img src="./assets/images/eth.png" height="24px" alt="tasla" />
+              <div class="info">
+                <p class="title">ETHUSD</p>
+                <p id="ethlive">3319.89 <span>USD</span></p>
+              </div>
+            </a>
+            <a href="#">
+              <img src="./assets/images/ltc.png" height="24px" alt="apple" />
+              <div class="info">
+                <p class="title">LTCUSD</p>
+                <p id="ltclive">84.85 <span>USD</span></p>
+              </div>
+            </a>
+          </div>
+        </div>
+      </div>
+      <div class="joinnow">
+        <a href="/auth/signup"> <button class="btn">Join Now</button></a>
+      </div>
+
+      <div class="chatbot">
+        <div class="header">
+          <h2>Chatbot</h2>
+        </div>
+        <div class="messages-wrapper">
+          <div class="message incoming">Hi there 👍, how can I help you?</div>
+        </div>
+
+        <div class="input-box">
+          <input type="text" id="user-input" placeholder="Enter a message" />
+          <button class="btn" onclick="sendMessage()">Send</button>
+        </div>
+      </div>
+
+      <button class="chatbot-toggler btn" onclick="toggleChatbot()">
+        Get Help ?
+      </button>
+    </section>
+
+    <section style="height: 100vh">
+      <div class="tradingview-widget-container">
+        <div class="tradingview-widget-container__widget"></div>
+        <script
+          type="text/javascript"
+          src="https://s3.tradingview.com/external-embedding/embed-widget-crypto-coins-heatmap.js"
+          async
+        >
+            {
+            "dataSource": "Crypto",
+            "blockSize": "market_cap_calc",
+            "blockColor": "change",
+            "locale": "en",
+            "symbolUrl": "",
+            "colorTheme": "dark",
+            "hasTopBar": false,
+            "isDataSetEnabled": false,
+            "isZoomEnabled": false,
+            "hasSymbolTooltip": true,
+            "width": "100%",
+            "height": "100%"
+          }
+        </script>
+      </div>
+      <!-- TradingView Widget END -->
+    </section>
+
+    <footer>
+      <div class="footer">
+        <div class="row">
+          <a href="mailto:mahme006@campus.goldsmiths.ac.uk"
+            ><img
+              height="32px"
+              src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAAACXBIWXMAAAsTAAALEwEAmpwYAAACFElEQVR4nO3YO2tUQRjG8RPFG14gFpbx0qRRv4CojZd8Ay1SLK5KCi8kjaJoZaGtKS1MZWMX1Eas1HhBsE2UJdhqmyKg5icH3sAQTXKWnN1zwPOHaYb3nXnenT0zz0yWNTQ0NDT0AgzgJCZwo6I2gRO5lm7F78cH9eEdhoqK34OvkbiEWbysqM2Ghpw57CpSwO1IWMTZrGIwElpybhZJmIngh1lNwGRoelMkuBPB7awmoB2aOkWC5yO4ldUEtELTfJHgpoDarQC242DpylYBB7CtzAKmYz8ey3oMxvA7n7PMAh5H3y+c66H48yE+Z6rMAnbgdVLEhR6IH8XPmOM9dpZWQPQP4lNiMa6UKP5qYhly3zPYk200iviYmKw7XTvFvx3v3WS8V//yO6WeA/nS4kUy6fTKX6wL0/g0GedZ/lfty0GGrXiUTJ7bj9NdiD+TWBYx1pa+n8S4nDjFnCcYXiN+OGKWWcSlSq0Ejq74LvJt8HnsKoejjUbf8ocqLkxHauGFsBnX8cP6fMe1PCerm5mLD/xi3KYWEtEL0ddO9/dau1Fswr5oAxscq9X3AspEU0DFaFagYvxvK9Cp4bNKq5sC3kbwZFYTcC80fS4SfCsxWiN9UbgGOJWc6g+KJOzGl0hYikfVqh535xID+A171y0gihhK3kjrwAwOFRK/4rp3HOO4X1Ebx7GNeqmGhoaGhmw1/gB/XKL57tX/VQAAAABJRU5ErkJggg=="
+          /></a>
+        </div>
+
+        <div class="row">
+          <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/about">About</a></li>
+            <li><a href="/auth/login">Sign In</a></li>
+            <li><a href="/auth/signup">Sign Up</a></li>
+          </ul>
+        </div>
+
+        <div class="row">
+          Copyright © 2024 Trading Pricer - All rights reserved.
+        </div>
+      </div>
+    </footer>
+    <script>
+    document.addEventListener("DOMContentLoaded", async function () {
+    try {
+        const response = await fetch("/user/dashboard/userinfo");
+        const data = await response.json();
+        const user = data.user;
+        const userSection = document.querySelector(".buttons");
+
+        if (user) {
+            userSection.innerHTML = `
+                <a href="/user/dashboard"><div>Welcome <span>${user.username}</span></div></a>
+                <a class="logout" href="/user/logout">Logout</a>
+            `;
+        }
+    } catch (error) {
+        console.error("Error fetching user details:", error);
+    }
+});
+
+      // -------------------------BOT--------------
+      function toggleChatbot() {
+        const chatbot = document.querySelector(".chatbot");
+        chatbot.classList.toggle("active");
+        const btn = document.querySelector(".chatbot-toggler");
+        btn.innerHTML = chatbot.classList.contains("active")
+          ? "Close"
+          : "Get Help ?";
+      }
+
+      function sendMessage() {
+        const userInput = document.getElementById("user-input").value;
+        if (userInput.trim() !== "") {
+          addOutgoingMessage(userInput);
+          fetch("/chatbot", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ message: userInput }),
+          })
+            .then((response) => response.json())
+            .then((data) => addIncomingMessage(data.answer))
+            .catch((error) => console.error("Error:", error));
+        }
+      }
+
+      function addOutgoingMessage(message) {
+        const messagesWrapper = document.querySelector(".messages-wrapper");
+        const messageDiv = document.createElement("div");
+        messageDiv.classList.add("message", "outgoing");
+        messageDiv.textContent = message;
+        messagesWrapper.appendChild(messageDiv);
+        document.getElementById("user-input").value = ""; // Clear input field
+      }
+
+      function addIncomingMessage(message) {
+        const messagesWrapper = document.querySelector(".messages-wrapper");
+        const messageDiv = document.createElement("div");
+        messageDiv.classList.add("message", "incoming");
+        messageDiv.textContent = message;
+        messagesWrapper.appendChild(messageDiv);
+      }
+
+      const btcTradeElement = document.getElementById("btclive");
+      const ltcTradeElement = document.getElementById("ltclive");
+      const ethTradeElement = document.getElementById("ethlive");
+
+      const btcTrade = {
+        element: btcTradeElement,
+        oldPrice: 0,
+        limiter: {
+          lastUpdated: 0,
+          interval: 5000, // Update interval in milliseconds
+        },
+      };
+
+      const ltcTrade = {
+        element: ltcTradeElement,
+        oldPrice: 0,
+        limiter: {
+          lastUpdated: 0,
+          interval: 5000, // Update interval in milliseconds
+        },
+      };
+
+      const ethTrade = {
+        element: ethTradeElement,
+        oldPrice: 0,
+        limiter: {
+          lastUpdated: 0,
+          interval: 5000, // Update interval in milliseconds
+        },
+      };
+
+      const ws = new WebSocket("wss://stream.binance.com:9443/ws/!ticker@arr");
+
+      ws.onmessage = (event) => {
+        const data = JSON.parse(event.data);
+
+        data.forEach((ticker) => {
+          switch (ticker.s) {
+            case "BTCUSDT":
+              updateTradeUI(btcTrade, ticker.c, "BTCUSDT");
+              break;
+            case "LTCUSDT":
+              updateTradeUI(ltcTrade, ticker.c, "LTCUSDT");
+              break;
+            case "ETHUSDT":
+              updateTradeUI(ethTrade, ticker.c, "ETHUSDT");
+              break;
+            // Add more cases for other coin pairs as needed
+          }
+        });
+      };
+
+      function updateTradeUI(trade, price, coinPair) {
+        if (price > trade.oldPrice) {
+          trade.element.style.color = "green";
+        } else if (price === trade.oldPrice) {
+          trade.element.style.color = "white";
+        } else {
+          trade.element.style.color = "red";
+        }
+
+        trade.oldPrice = price;
+
+        // Rate limiter to update UI at a specified interval
+        const currentTime = Date.now();
+        if (currentTime - trade.limiter.lastUpdated > trade.limiter.interval) {
+          trade.limiter.lastUpdated = currentTime;
+          trade.element.innerText = parseFloat(price).toFixed(2);
+
+        }
+      }
+    </script>
+  </body>
+</html>
